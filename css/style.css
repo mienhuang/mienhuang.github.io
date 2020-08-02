@@ -16,7 +16,7 @@ specific font stacks to ensure the greatest OS/browser compatibility.
   font-family: Roboto;
   src: url("./Roboto-Medium.ttf") format("ttf"); }
 
-#header .site-name #logo {
+* {
   font-family: Roboto !important; }
 
 html,
@@ -69,10 +69,13 @@ div {
   box-sizing: border-box; }
 
 #header {
+  background: url("../img/bg.jpg") no-repeat;
+  background-size: auto 100%;
   padding: 58px 0 0;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  position: relative; }
+  position: relative;
+  height: 260px; }
   #header .site-name {
     margin-bottom: 40px; }
     #header .site-name h1 {
@@ -93,7 +96,8 @@ div {
     padding: 0;
     position: absolute;
     right: 0;
-    bottom: 0; }
+    bottom: 0;
+    font-size: 14px; }
     #header #nav-menu a {
       display: inline-block;
       padding: 3px 20px 3px;
@@ -104,6 +108,8 @@ div {
       #header #nav-menu a:hover {
         border-bottom-color: #444; }
       #header #nav-menu a.current {
+        background-color: #ddd;
+        border-radius: 4px 4px 0 0;
         border: 1px solid #ddd;
         border-bottom-color: #fff; }
 
