@@ -38,8 +38,8 @@ body {
   font-size: 14px; }
 
 .body_container {
-  padding: 0 60px;
-  max-width: 1150px;
+  padding: 0 30px;
+  max-width: 1300px;
   margin: 0 auto; }
 
 .content_container {
@@ -77,7 +77,8 @@ div {
   position: relative;
   height: 260px; }
   #header .site-name {
-    margin-bottom: 40px; }
+    margin-bottom: 40px;
+    margin-left: 20px; }
     #header .site-name h1 {
       padding: 0;
       margin: 0;
