@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="blog grown diary">
+  
+  
+    <meta name="description" content="One website for remembering the life i spend on coding">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    Angular 从创建项目到打包docker image 发布 |
+    
+    Mien&#39;s Grown Diary</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Angular-从创建项目到打包docker-image-发布" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+  
+    <h1 class="article-title" itemprop="name">
+      Angular 从创建项目到打包docker image 发布
+    </h1>
+  
+  
+
+
+
+
+            </header>
+            
+
+                
+                    <div class="article-meta">
+                        <a href="/2020/08/02/Angular-%E4%BB%8E%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%88%B0%E6%89%93%E5%8C%85docker-image-%E5%8F%91%E5%B8%83/" class="article-date">
+  <time datetime="2020-08-02T09:17:30.000Z" itemprop="datePublished">2020-08-02</time>
+</a>
+                            
+                    </div>
+                    
+
+                        
+                            
+    <div class="tocbot"></div>
+
+
+
+
+
+                                
+
+                                    <div class="article-entry" itemprop="articleBody">
+                                        
+
+
+                                            
+
+                                                
+                                                                    <blockquote>
+<p>hello，各位亲爱的小伙伴大家好啊.<br>又是一个崭新且阳光明媚的下午,今天我们要学习的是如何从创建一个Angular的项目到打包成docker image并部署到自己的服务器上。</p>
+</blockquote>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/17191a5a297f4271?w=1240&h=992&f=png&s=26050"></p>
+<p>让自己的站点运行在docker上，听起来是不是很酷？</p>
+<p>那就让我们开始吧！</p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>首先呢，我们简单介绍一下我们的开发环境和工具。</p>
+<ul>
+<li>windows 10</li>
+<li>docker desktop: 2.2.0.5</li>
+<li>vs code</li>
+<li>Terminus</li>
+<li>Angular 9.0.6</li>
+<li>Angular CLI:9.0.6</li>
+<li>Nodejs: 12.16.1</li>
+</ul>
+<blockquote>
+<p>Tips: 本教程不涉及docker 的安装。 </p>
+</blockquote>
+<p>介绍完了开发的工具和环境之后我们进入正题，先创建项目。</p>
+<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p>关于如何使用Angular-CLI 创建一个项目我想大家应该都已经很清楚了对吧。</p>
+<p>就是 <code>ng new docker-demo --prefix=mien</code></p>
+<p>创建成功之后我们进入目录，运行程序。</p>
+<p><code>cd docker-demo &amp;&amp; ng serve</code></p>
+<p>之后打开浏览器，访问<code>localhost:4200</code></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/17191c44d3df9e5b?w=854&h=784&f=png&s=45836"></p>
+<p>还是原来的UI还是熟悉的味道对吧。</p>
+<p>OK，下面进入docker部分。</p>
+<h3 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h3><p>在开始写代码之前，我们先来做一个流程分析。</p>
+<ol>
+<li><p>服务端的运行环境。</p>
+<p> 我们的应用是运行在docker上了，所以对于服务端而言，只需要安装docker即可。</p>
+</li>
+<li><p>前端的挂载环境。</p>
+<p> 在我们这个示例中，我们使用nginx来host前端项目。</p>
+</li>
+<li><p>打包流程。</p>
+<p> 使用过nginx的童鞋应该很清楚，最简单的操作就是把需要host的项目代码放到nginx的html目录下即可。我们呢，就按照最简单的来，不涉及额外的配置。</p>
+<p> 对应到我们的项目其实就是：</p>
+<ul>
+<li><p><code>npm install</code></p>
+</li>
+<li><p><code>npm run build --prod</code></p>
+</li>
+<li><p>copy 编译结果到nginx 的html目录下</p>
+<p>所以，看上去还是很简单的嘛</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="查看本地Image"><a href="#查看本地Image" class="headerlink" title="查看本地Image"></a>查看本地Image</h3><p>首先我们查看本地已经存在的image和正在运行的image。</p>
+<p>执行 <code>docker images</code> 和 <code>docker ps</code></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/17191ca546f79fc2?w=901&h=214&f=png&s=19354"></p>
+<p>OK，本地目前只有node 和 nginx 的image。</p>
+<p>当然还有一个我们这次教程不涉及的<code>portainer</code>,这个是什么？其实就是一个可视化的docker 管理工具。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/1719278024d69a68?w=853&h=835&f=png&s=70974"></p>
+<p>对于不是很喜欢敲命令的童鞋，这个工具还是很好用的。</p>
+<h3 id="选取docker-image"><a href="#选取docker-image" class="headerlink" title="选取docker image"></a>选取docker image</h3><p>我们这里需要用的第三方image有两个，一个是node,另一个是nginx。那么第一步就是到docker hub 去查看需要的版本。</p>
+<p><code>https://hub.docker.com/</code></p>
+<ol>
+<li>查看 node</li>
+</ol>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/171927c937eb64bb?w=766&h=287&f=png&s=16139"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/171927d345712438?w=921&h=299&f=png&s=19867"></p>
+<p>对于Node 的版本选择，我们尽量使用最新的版本。所以我们选择<strong>13</strong>这个版本。</p>
+<ol start="2">
+<li>查看 nginx</li>
+</ol>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/171927ed7ab6f7a8?w=769&h=284&f=png&s=14967"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/19/171927f09f0534d9?w=765&h=252&f=png&s=15134"></p>
+<p>同样的我们选取新版本的1.17作为我们的nginx版本。</p>
+<h3 id="创建dockerfile"><a href="#创建dockerfile" class="headerlink" title="创建dockerfile"></a>创建dockerfile</h3><p>dockerfile 其实就是一个流程安排的脚本文件，先做什么，再做什么，顺序执行。我们直接来看内容：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">13</span> as sdk</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash">  npm install -g @angular/cli</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./docker-demo/package.json /app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">13</span> as builder</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=sdk /app /app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./docker-demo /app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.17</span>.<span class="number">9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -rf /usr/share/nginx/html/*</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=builder /app/dist/docker-demo /usr/share/nginx/html</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> /bin/sh -c <span class="string">&quot;nginx -g &#x27;daemon off;&#x27;&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>我们简单过一下上面的内容：</p>
+<ul>
+<li>指定环境，例如node 和nginx 使用<code>FROM</code>关键字</li>
+<li>执行命令，例如npm i 使用<code>RUN</code>关键字</li>
+<li>复制内容到指定位置，使用 <code>COPY from to</code></li>
+<li>明确命令运行位置，使用 <code>WORKDIR</code></li>
+<li>暴露端口号, 使用 <code>EXPOSE</code>。这里之所以是80是因为nginx的默认端口是80</li>
+<li>指定入口，使用 <code>ENTRYPOINT</code></li>
+</ul>
+<h3 id="打包image"><a href="#打包image" class="headerlink" title="打包image"></a>打包image</h3><p>在目录下我们运行打包命令：</p>
+<p><code>docker build -f Dockfile -t d-demo:latest .</code></p>
+<p>解释一下这条命令</p>
+<p><code>docker build</code> 就是运行编译指令</p>
+<p><code>-f Dockerfile</code> 就是指定Dockfile的位置</p>
+<p><code>-t d-demo:latest</code> 就是对image的tag名称</p>
+<p><code>.</code> 表示执行目录为当前目录</p>
+<p>命令执行结束之后，我们使用<code>docker images</code> 查看当前存在的docker image。就能发现我们刚才创建的<code>d-demo:latest</code>了。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/20/1719553f61abefbf?w=848&h=121&f=png&s=11310"></p>
+<h3 id="导出image"><a href="#导出image" class="headerlink" title="导出image"></a>导出image</h3><p>正常的流程打包过程是在线上的pipeline 执行的，但是我们目前是学习过程，所以就在本地执行。那么我们就需要把我们编译成功的镜像导出成文件，这样我们才能在服务端使用。</p>
+<p>下面说一下docker 的image 导出命令。</p>
+<p><code>docker save -o d-demo.tar d-demo:latest</code></p>
+<p><code>docker save</code>就是我们要掌握的保存image的命令.</p>
+<p><code>-o</code>表示保存文件</p>
+<p>然后就是要保存的文件名 和要保存的image</p>
+<p>然后我们查看本地文件。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/20/171955bf67434d89?w=801&h=154&f=png&s=8780"></p>
+<p>我们看到了我们刚才指定的压缩包对吧。</p>
+<h3 id="运行image"><a href="#运行image" class="headerlink" title="运行image"></a>运行image</h3><p>既然编译和导出都学会了，那么就让它运行起来吧。</p>
+<p><code>docker run -d -p 8090:80 d-demo:latest</code></p>
+<p><code>docker run</code>又一个各位童鞋需要掌握的命令。</p>
+<p><code>-d</code> 后台运行</p>
+<p><code>-p</code> 指定端口映射，这里其实就是把image的80端口映射到8090，这样我们访问8090即可。</p>
+<p>然后就是image的名称了</p>
+<p>执行命令之后我们就可以使用<code>docker ps</code>来查看当前运行的image</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/20/171956168a54084e?w=1052&h=120&f=png&s=10916"></p>
+<p>LOOK~ LOOK~ 我们的image在运行了对吧。就是这么的简单！</p>
+<p>下面就是见证奇迹的时刻，然我们浏览器访问一下。</p>
+<p>当当当当~</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/20/171956355a65841d?w=814&h=784&f=png&s=47153"></p>
+<p>不要说我没换图哦<del>看端口号</del></p>
+<p>好了，这些就是本次教程的全部内容了。当然我写的很简单，但是其实里面还是存在很多坑的。比如dockerfile里面的执行顺序，还有一些看起来不需要的操作，你去掉就会发现报错了。</p>
+<p>如果小伙伴感兴趣的话，我们可以再做一个后续。当然还有docker compose, K8S这些我们都没有涉及。如果你想看的话，那就留言告诉我吧。</p>
+<blockquote>
+<p>作者：Mien，目前供职于<strong>斯伦贝谢</strong>。</p>
+</blockquote>
+<blockquote>
+<p>涉猎范围： Angular, Vue, React, 小程序, electron, nodeJS以及一些乱七八糟的技术</p>
+</blockquote>
+<blockquote>
+<p>欢迎留言提问和指正。</p>
+</blockquote>
+<p>我们下周再见~</p>
+
+                                                                        
+                                    </div>
+                                    <footer class="article-footer">
+                                        <a data-url="https://mienhuang.github.io/2020/08/02/Angular-%E4%BB%8E%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%88%B0%E6%89%93%E5%8C%85docker-image-%E5%8F%91%E5%B8%83/" data-id="ckdcvin8u0003kovibo2c2lf1" class="article-share-link">
+                                            Share
+                                        </a>
+                                        
+                                    </footer>
+
+    </div>
+
+    
+        
+  <nav class="article-nav">
+    
+      <a href="/2020/08/02/Angular-PWA-%E5%85%A5%E5%9D%91%E6%8C%87%E5%8C%97/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            Angular PWA 入坑指北
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/08/02/100%E7%A7%92%E4%B8%8A%E6%89%8BDeno/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">100秒上手Deno</div>
+      </a>
+    
+  </nav>
+
+
+            
+
+                
+                    
+                        
+                            
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Mien&#39;s Grown Diary</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Mien&#39;s Grown Diary"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

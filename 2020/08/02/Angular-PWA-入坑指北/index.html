@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="blog grown diary">
+  
+  
+    <meta name="description" content="One website for remembering the life i spend on coding">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    Angular PWA 入坑指北 |
+    
+    Mien&#39;s Grown Diary</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Angular-PWA-入坑指北" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+  
+    <h1 class="article-title" itemprop="name">
+      Angular PWA 入坑指北
+    </h1>
+  
+  
+
+
+
+
+            </header>
+            
+
+                
+                    <div class="article-meta">
+                        <a href="/2020/08/02/Angular-PWA-%E5%85%A5%E5%9D%91%E6%8C%87%E5%8C%97/" class="article-date">
+  <time datetime="2020-08-02T09:18:00.000Z" itemprop="datePublished">2020-08-02</time>
+</a>
+                            
+                    </div>
+                    
+
+                        
+                            
+    <div class="tocbot"></div>
+
+
+
+
+
+                                
+
+                                    <div class="article-entry" itemprop="articleBody">
+                                        
+
+
+                                            
+
+                                                
+                                                                    <blockquote>
+<p>hello，各位小伙伴大家好啊，这篇文章终于是在我拖的不能在拖的情况下，更了出来。在这里十分感谢那些不辞辛苦提醒我更新文章的小伙伴。愿你们在新的一年里，远离病毒，远离降薪，远离加班，升职加薪与你们同在，阿门~</p>
+</blockquote>
+<p>今天我们来水一篇文章，至于为什么说水一篇文章呢，因为关于PWA入门的基础教程其实网上是有很多的，大厂的系统教程也是有的，这里我们推荐两个。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://codelabs.developers.google.com/codelabs/your-first-pwapp/#0">Your First Progressive Web App</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/service-worker-intro">Service Worker &amp; PWA</a></li>
+</ul>
+<p>第一个是google的code lab。非常系统的讲解了从一个普通的应用如何变成PWA应用。步骤详细，容易上手。</p>
+<p>第二个是Angular官方的PWA文档，Angular的好处就是官方CLI提供了工具，能后快速的帮你完成基础的配置，省力但是存在一些难度和问题，需要自己处理。</p>
+<p>下面开始正片环节！</p>
+<h3 id="什么是PWA"><a href="#什么是PWA" class="headerlink" title="什么是PWA"></a>什么是PWA</h3><p>PWA全称Progressive web app，中文名称渐进式Web应用。</p>
+<p>至于PWA的特点，优势，前世今生这些细节，我给各位小伙伴找了一篇文章，来自<strong>王玉略</strong>同学的<a target="_blank" rel="noopener" href="https://juejin.im/post/6844903556470816781">简单介绍一下Progressive Web App(PWA)</a>.文章写的很详细，为了保证各位小伙伴看到的都是不重复的资源信息，我就不重复这些了。</p>
+<blockquote>
+<p>ps: @王玉略 同学记得来点赞~</p>
+</blockquote>
+<h3 id="为什么我选择PWA"><a href="#为什么我选择PWA" class="headerlink" title="为什么我选择PWA"></a>为什么我选择PWA</h3><p>如果为我们将PWA用在真实的项目上，就需要有我们技术选型的依据。为什么选择PWA？</p>
+<p>先说一下项目需求，我们需要开发一款跨端的应用，并且该应用很大部分情况下是在离线使用。</p>
+<p>应用的主要功能在于用户输入数据的展示，并且数据量不大。</p>
+<p>开发周期三个月，包含需求确定，UI/UX，开发，部署。</p>
+<p>需要开发的内容， client APP， BFF(Back-end For Front-end)， Back-end.</p>
+<p>开发人员， 两名。<br>估算之后的开发实际时间大约一个半月。</p>
+<p>我需要开发client APP和BFF。</p>
+<p>再加上我之前并没有React Native的经验，所以如果选择React Native我并不能保证在计划时间内完成开发任务，更不要说Flutter或者原生开发了。</p>
+<p>其实我们认真分析项目可以发现核心需求只有一个，那就是离线使用。所以传统的网页并能满足，但是PWA的特点就是可以离线运行，所以PWA可以完美的满足核心需求。</p>
+<h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><ul>
+<li>windows: 10</li>
+<li>node: 10.16.3</li>
+<li>npm: 6.9.0</li>
+<li>Angular CLI: 9.0.6</li>
+<li>Angular: 9.0.6</li>
+<li>Chrome: 80.0.3987.163</li>
+</ul>
+<h3 id="初始化Angular-APP"><a href="#初始化Angular-APP" class="headerlink" title="初始化Angular APP"></a>初始化Angular APP</h3><p>ok, 下面进入正题，首先却创建项目。</p>
+<p><code>ng new ng-pwa-app --prefix=slb</code></p>
+<p>这样一个完整的Angular项目 GET！</p>
+<p>接下来我们借助Angular CLI的支持执行下面这行命令。</p>
+<p><code>ng add @angular/pwa --project *project-name*</code></p>
+<p>对应到我们的项目就是</p>
+<p><code>ng add @angular/pwa --project ng-pwa-app</code></p>
+<p>到这里，我们得到了一个PWA的项目。</p>
+<p>好，本期教程到此结束~</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714e78ec2326baf?w=870&h=832&f=png&s=280326"><br>错了，错了，我们继续…</p>
+<p>我们首先来看下这条命令都背着我们做了什么事情。</p>
+<ul>
+<li>安装 <code>@angular/service-worker</code></li>
+<li>启用service worker build</li>
+<li>在app module 注册service worker</li>
+<li>在index.html 引入<code>manifest</code> 和 <code>theme-color</code></li>
+<li>增加icon</li>
+<li>创建 <code>ngsw-config.json</code></li>
+</ul>
+<p>接下来我们将项目编译一下</p>
+<p><code>ng build --prod</code></p>
+<p>编译之后我们会得到<code>dist/ng-pwa-app/</code>目录下的编译结果。</p>
+<p>至于为什么我们不直接使用 <code>ng serve</code>来测试呢？ </p>
+<p>答案当然是 <code>ng serve</code> 不能够支持PWA</p>
+<p>这时候我们需要一个server 来 host 我们的app,这里我们使用<code>http-serve</code>.</p>
+<p>全局安装 http-serve <code>npm i http-server -g</code></p>
+<p>接下来我们就可以运行一下我们的项目了~</p>
+<p>执行下面这行命令</p>
+<p><code>http-server -p 8080 -c-1 dist/ng-pwa-app</code></p>
+<p>查看<code>localhost:8080</code></p>
+<p>告诉我，你看到了下图~</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f0a23b7dcc13?w=765&h=684&f=png&s=33173"></p>
+<p>到这里我们先不继续往下深入，先看一下Angular CLI背着我们具体做的东西。</p>
+<h3 id="manifest"><a href="#manifest" class="headerlink" title="manifest"></a>manifest</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ng-pwa-app&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;short_name&quot;</span>: <span class="string">&quot;ng-pwa-app&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;theme_color&quot;</span>: <span class="string">&quot;#1976d2&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;background_color&quot;</span>: <span class="string">&quot;#fafafa&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;display&quot;</span>: <span class="string">&quot;standalone&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;scope&quot;</span>: <span class="string">&quot;./&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;start_url&quot;</span>: <span class="string">&quot;./&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;icons&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;src&quot;</span>: <span class="string">&quot;assets/icons/icon-72x72.png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span>: <span class="string">&quot;72x72&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;purpose&quot;</span>: <span class="string">&quot;maskable&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;src&quot;</span>: <span class="string">&quot;assets/icons/icon-96x96.png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span>: <span class="string">&quot;96x96&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;purpose&quot;: &quot;maskable&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;src&quot;</span>: <span class="string">&quot;assets/icons/icon-128x128.png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span>: <span class="string">&quot;128x128&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;purpose&quot;</span>: <span class="string">&quot;maskable&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">      &quot;src&quot;: &quot;assets/icons/icon-144x144.png&quot;,</span><br><span class="line">      &quot;sizes&quot;: &quot;144x144&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;image/png&quot;,</span><br><span class="line">      &quot;purpose&quot;: &quot;maskable&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;src&quot;</span>: <span class="string">&quot;assets/icons/icon-152x152.png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span>: <span class="string">&quot;152x152&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;purpose&quot;</span>: <span class="string">&quot;maskable&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;src&quot;</span>: <span class="string">&quot;assets/icons/icon-192x192.png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span>: <span class="string">&quot;192x192&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;purpose&quot;</span>: <span class="string">&quot;maskable&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;src&quot;</span>: <span class="string">&quot;assets/icons/icon-384x384.png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span>: <span class="string">&quot;384x384&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;purpose&quot;</span>: <span class="string">&quot;maskable&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;src&quot;</span>: <span class="string">&quot;assets/icons/icon-512x512.png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span>: <span class="string">&quot;512x512&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;purpose&quot;</span>: <span class="string">&quot;maskable&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的manifest 文件是CLI帮我们生成的</p>
+<ul>
+<li>name: 项目名称</li>
+<li>theme_color: 主题颜色</li>
+<li>display: 运行方式</li>
+<li>start_url: 加载目录或者说入口地址</li>
+<li>icons: 图标数组，针对不同尺寸</li>
+</ul>
+<h3 id="ngsw-config-json"><a href="#ngsw-config-json" class="headerlink" title="ngsw-config.json"></a>ngsw-config.json</h3><p>如果你之前接触过Angular的worker的话，就会知道Angular引入worker并不是我们创建一个worker.js,而是提供一个配置json,然后根据你的配置自动帮你生成worker js 文件。</p>
+<p>下面就是这个配置文件的内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span>: <span class="string">&quot;./node_modules/@angular/service-worker/config/schema.json&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;/index.html&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;assetGroups&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;app&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;installMode&quot;</span>: <span class="string">&quot;prefetch&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resources&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;files&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;/favicon.ico&quot;</span>,</span><br><span class="line">          <span class="string">&quot;/index.html&quot;</span>,</span><br><span class="line">          <span class="string">&quot;/manifest.webmanifest&quot;</span>,</span><br><span class="line">          <span class="string">&quot;/*.css&quot;</span>,</span><br><span class="line">          <span class="string">&quot;/*.js&quot;</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;assets&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;installMode&quot;</span>: <span class="string">&quot;lazy&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;updateMode&quot;</span>: <span class="string">&quot;prefetch&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;resources&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;files&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;/assets/**&quot;</span>,</span><br><span class="line">          <span class="string">&quot;/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)&quot;</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对这个文件，我们讲两部分</p>
+<h4 id="assetGroups"><a href="#assetGroups" class="headerlink" title="assetGroups"></a>assetGroups</h4><p>关于assetGroups，它出现在了上面的json文件中，从上面的内容你可以发现，这部分是与应用一起加载的资源，同时也会一起更新。因为我们在开始就已经知道了这些具体的资源，所以我们可以将这些明确的资源配置在这里。</p>
+<p>主要包括了应用的运行类资源，html,js,css等等资源，还有就是一些文件资源，svg,png,ttf等资源。</p>
+<p>具体细节如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> AssetGroup &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  installMode?: <span class="string">&#x27;prefetch&#x27;</span> | <span class="string">&#x27;lazy&#x27;</span>;</span><br><span class="line">  updateMode?: <span class="string">&#x27;prefetch&#x27;</span> | <span class="string">&#x27;lazy&#x27;</span>;</span><br><span class="line">  resources: &#123;</span><br><span class="line">    files?: <span class="built_in">string</span>[];</span><br><span class="line">    urls?: <span class="built_in">string</span>[];</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="dataGroups"><a href="#dataGroups" class="headerlink" title="dataGroups"></a>dataGroups</h4><p>关于dataGroups的配置我们在上面并没有体现，那是因为这部分的缓存的资源是随应用执行而产生和发生变化的。</p>
+<p>比如接口返回的缓存。</p>
+<p>具体细节如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> DataGroup &#123;</span><br><span class="line">  name: <span class="built_in">string</span>;</span><br><span class="line">  urls: <span class="built_in">string</span>[];</span><br><span class="line">  version?: <span class="built_in">number</span>;</span><br><span class="line">  cacheConfig: &#123;</span><br><span class="line">    maxSize: <span class="built_in">number</span>;</span><br><span class="line">    maxAge: <span class="built_in">string</span>;</span><br><span class="line">    timeout?: <span class="built_in">string</span>;</span><br><span class="line">    strategy?: <span class="string">&#x27;freshness&#x27;</span> | <span class="string">&#x27;performance&#x27;</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明一点，其中的urls的内容是一个匹配策略。你可以将你希望缓存的所有地址写在这里。</p>
+<h3 id="运行lighthouse"><a href="#运行lighthouse" class="headerlink" title="运行lighthouse"></a>运行lighthouse</h3><p>打开chrome 的dev tool, 选择 Audits页。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f23f230be515?w=764&h=686&f=png&s=49066"></p>
+<p>点击 Generate report, 等待结果。</p>
+<p>向下滑动页面，查看Progressive Web App相关的内容。如下：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f25cf4fa8e9a?w=762&h=946&f=png&s=72831"></p>
+<p>从这里的结果上我们可以发现我们目前存在两个问题。</p>
+<ul>
+<li>我们没使用https,先忽略这个问题，真实的生产环境你一定需要部署到https的server上。</li>
+<li>缺少app-touch-icon</li>
+</ul>
+<p>我们需要处理的就是第二项。</p>
+<p>处理的方法其实很简单，就是需要在index.html页面添加</p>
+<p><code> &lt;link rel=&quot;apple-touch-icon&quot; href=&quot;assets/icons/icon-144x144.png&quot;&gt;</code></p>
+<p>添加之后重新编译，和重启server.</p>
+<p>重新运行Lighthouse.</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f2c572093af4?w=1153&h=964&f=png&s=85412"></p>
+<p>重新执行之后我们发现，错误只剩下https的问题了。但是我们依然没有在地址栏的右边看到安装按钮。这是为什么？</p>
+<p>既然这里Lighthouse不能发现问题，那么我们切换到Application页面看一下。</p>
+<p>进入Application tab下，左侧选择Manifest.</p>
+<p>我们发现了下面的警告！</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f3243f88d11c?w=1381&h=263&f=png&s=25817"></p>
+<p>上面的警告说我们的给的图片不合适？可是，这不是官方的图标吗？？？</p>
+<p>网上搜索了一番，发现有人也遇到了这个问题，但是没有看到合适的回答。</p>
+<p>一番折腾之后我发现了一个解决方案，去manifest里面修改144X144这个图片的perpose.</p>
+<p>从默认的<code>maskable</code> 修改为 <code>any</code>.</p>
+<p>然后重新编译，重启server,刷新页面。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f42468235632?w=624&h=201&f=png&s=13546"></p>
+<p>点击安装：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f43a75c7ae38?w=629&h=222&f=png&s=18823"></p>
+<p>变样子了对吗？</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f4444161d405?w=928&h=742&f=png&s=59601"></p>
+<p>到这里，各位小伙伴现在请站起来给自己鼓鼓掌。你已经得到了一个可以安装的PWA应用的~</p>
+<h3 id="处理更新"><a href="#处理更新" class="headerlink" title="处理更新"></a>处理更新</h3><p>上面我们得到了应用之后，用户就可以安装到桌面了，但是如果我们服务端更新了，但是用户这个没有同步怎么办？</p>
+<p>Angular的SwUpdate给我们提供了这些功能。</p>
+<p>SwUpdate 服务支持四个独立的操作：</p>
+<ul>
+<li><p>获取出现可用更新的通知。如果要刷新页面，这些就是可加载的新版本。</p>
+</li>
+<li><p>获取更新被激活的通知。这时候 Service Worker 就可以立即使用这些新版本提供服务了。</p>
+</li>
+<li><p>要求 Service Worker 向服务器查询是否有新版本。</p>
+</li>
+<li><p>要求 Service Worker </p>
+</li>
+</ul>
+<p>我们在 <code>app.component.ts</code>里面创建两个方法。</p>
+<p>监听更新：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> _listenOnUpdate() &#123;</span><br><span class="line">    <span class="built_in">this</span>.updates.available.subscribe(<span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;current version is&#x27;</span>, event.current);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;available version is&#x27;</span>, event.available);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">this</span>.updates.activated.subscribe(<span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;old version was&#x27;</span>, event.previous);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;new version is&#x27;</span>, event.current);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果发现可用更新或者已激活更新，我们就会看到上面的Log，具体发现更新之后的处理，你可以根据实际需求来决定。</p>
+<p>比如你可以弹框提醒用户刷新页面。</p>
+<p>触发更新：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> _checkForUpdate() &#123;</span><br><span class="line">    <span class="keyword">const</span> appIsStable$ = <span class="built_in">this</span>.appRef.isStable.pipe(first(<span class="function"><span class="params">isStable</span> =&gt;</span> isStable === <span class="literal">true</span>));</span><br><span class="line">    <span class="keyword">const</span> everySixHours$ = interval(<span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">6</span>);</span><br><span class="line">    <span class="keyword">const</span> everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);</span><br><span class="line"></span><br><span class="line">    everySixHoursOnceAppIsStable$.subscribe(<span class="function">() =&gt;</span> <span class="built_in">this</span>.updates.checkForUpdate());</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里设置的是每6小时触发一个检测更新。</p>
+<p>完整代码：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, ApplicationRef, ChangeDetectionStrategy &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; SwUpdate &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/service-worker&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; interval, concat &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; first &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs/operators&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">&#x27;slb-root&#x27;</span>,</span><br><span class="line">  templateUrl: <span class="string">&#x27;./app.component.html&#x27;</span>,</span><br><span class="line">  styleUrls: [<span class="string">&#x27;./app.component.scss&#x27;</span>],</span><br><span class="line">  changeDetection: ChangeDetectionStrategy.OnPush</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> updates: SwUpdate, <span class="keyword">private</span> appRef: ApplicationRef</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>._checkForUpdate();</span><br><span class="line">    <span class="built_in">this</span>._listenOnUpdate();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> _listenOnUpdate() &#123;</span><br><span class="line">    <span class="built_in">this</span>.updates.available.subscribe(<span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;current version is&#x27;</span>, event.current);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;available version is&#x27;</span>, event.available);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">this</span>.updates.activated.subscribe(<span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;old version was&#x27;</span>, event.previous);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;new version is&#x27;</span>, event.current);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> _checkForUpdate() &#123;</span><br><span class="line">    <span class="keyword">const</span> appIsStable$ = <span class="built_in">this</span>.appRef.isStable.pipe(first(<span class="function"><span class="params">isStable</span> =&gt;</span> isStable === <span class="literal">true</span>));</span><br><span class="line">    <span class="keyword">const</span> everySixHours$ = interval(<span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">6</span>);</span><br><span class="line">    <span class="keyword">const</span> everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);</span><br><span class="line"></span><br><span class="line">    everySixHoursOnceAppIsStable$.subscribe(<span class="function">() =&gt;</span> <span class="built_in">this</span>.updates.checkForUpdate());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里的话，传统的教程应该已经结束了，但是我们没有，我们还有补充教程。如何手动处理worker事件。</p>
+<p>通过上面的教程我们已经知道了，Angular会帮我们生成worker.js 文件，但是在我们实际的项目中，我们有可能需要自己监听一些事件，然后自定义一些处理。但是我们没有worker.js 文件，这时候怎么做？？</p>
+<p>动一下你聪明的小脑瓜，想一下？</p>
+<p>其实很简单，那就是我们自己写一个worker.js替换默认的。</p>
+<p>当然，并不是简单的全部替换。</p>
+<p>先上代码：</p>
+<h4 id="mien-worker-js"><a href="#mien-worker-js" class="headerlink" title="mien-worker.js"></a>mien-worker.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line">self.onmessage = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e, <span class="string">&#x27;message from mien\&#x27;s custom worker service...&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">importScripts(<span class="string">&#x27;./ngsw-worker.js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在我们自定义的worker.js 内，我们自己注册事件。在最后要做的就是把Angular帮我们做的事情拿过来用。</p>
+<p><code>importScripts(&#39;./ngsw-worker.js&#39;)</code></p>
+<p>我们再到 <code>app.module.ts</code>去修改worker的注册。</p>
+<p>从之前的：</p>
+<p><code>ServiceWorkerModule.register(&#39;ngsw-worker.js&#39;, &#123; enabled: environment.production &#125;),</code></p>
+<p>修改为：</p>
+<p><code>ServiceWorkerModule.register(&#39;mien-worker.js&#39;, &#123; enabled: environment.production &#125;),</code></p>
+<p>再有把我们worker文件加入到资源列表，这样这个js 就不会被编译进main.js内了。</p>
+<h3 id="Angular-json"><a href="#Angular-json" class="headerlink" title="Angular.json"></a>Angular.json</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;assets&quot;: [</span><br><span class="line">              &quot;src&#x2F;favicon.ico&quot;,</span><br><span class="line">              &quot;src&#x2F;assets&quot;,</span><br><span class="line">              &quot;src&#x2F;manifest.webmanifest&quot;,</span><br><span class="line">              &quot;src&#x2F;mien-worker.js&quot;</span><br><span class="line">            ],</span><br></pre></td></tr></table></figure>
+
+<p>新增的内容是 <code>src/mien-worker.js</code>.</p>
+<p>来看效果：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/6/1714f604d0d21816?w=1255&h=116&f=png&s=19470"></p>
+<p>OK~</p>
+<p>到这里，本期的更新 <strong>Angular PWA 入坑指北</strong> 就全部结束了。</p>
+<p>在这里我公布一个计划，我计划开一个系列专栏。从头学习javascript。在现在所有人只关心三大框架，小程序，Flutter的时候，我觉得基础才是最重要的基石，良好的基础能让你在学习新知识的时候信手拈来。哪怕是看源代码的时候也能得心应手。</p>
+<p>如果你感兴趣，请留言告诉我吧。</p>
+<blockquote>
+<p>Mien, 5年前端开发经验，目前就职于<strong>斯伦贝谢</strong>。</p>
+</blockquote>
+<blockquote>
+<p>涉猎范围： Angular, Vue, React, 小程序, electron, nodeJS以及一些乱七八糟的技术</p>
+</blockquote>
+<blockquote>
+<p>欢迎留言提问和指正。</p>
+</blockquote>
+<p>我们下周再见~</p>
+
+                                                                        
+                                    </div>
+                                    <footer class="article-footer">
+                                        <a data-url="https://mienhuang.github.io/2020/08/02/Angular-PWA-%E5%85%A5%E5%9D%91%E6%8C%87%E5%8C%97/" data-id="ckdcvin8t0002koviglntccst" class="article-share-link">
+                                            Share
+                                        </a>
+                                        
+                                    </footer>
+
+    </div>
+
+    
+        
+  <nav class="article-nav">
+    
+      <a href="/2020/08/02/Angular-%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%AE%9E%E8%B7%B5-%E4%B9%8B-Single-SPA-%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%8A%EF%BC%89/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            Angular 微前端实践 之 Single-SPA 手把手教程（上）
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/08/02/Angular-%E4%BB%8E%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%88%B0%E6%89%93%E5%8C%85docker-image-%E5%8F%91%E5%B8%83/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">Angular 从创建项目到打包docker image 发布</div>
+      </a>
+    
+  </nav>
+
+
+            
+
+                
+                    
+                        
+                            
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Mien&#39;s Grown Diary</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Mien&#39;s Grown Diary"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>

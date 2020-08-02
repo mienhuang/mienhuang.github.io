@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="blog grown diary">
+  
+  
+    <meta name="description" content="One website for remembering the life i spend on coding">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    100秒上手Deno |
+    
+    Mien&#39;s Grown Diary</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-100秒上手Deno" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+  
+    <h1 class="article-title" itemprop="name">
+      100秒上手Deno
+    </h1>
+  
+  
+
+
+
+
+            </header>
+            
+
+                
+                    <div class="article-meta">
+                        <a href="/2020/08/02/100%E7%A7%92%E4%B8%8A%E6%89%8BDeno/" class="article-date">
+  <time datetime="2020-08-02T09:16:37.000Z" itemprop="datePublished">2020-08-02</time>
+</a>
+                            
+                    </div>
+                    
+
+                        
+                            
+    <div class="tocbot"></div>
+
+
+
+
+
+                                
+
+                                    <div class="article-entry" itemprop="articleBody">
+                                        
+
+
+                                            
+
+                                                
+                                                                    <blockquote>
+<p>hello各位亲爱的小伙伴，大家好啊。最近我们迎来了一个新的稳定版本的轮子喽。你学习了吗？</p>
+</blockquote>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/17207810a2250597?w=225&h=225&f=png&s=57709"></p>
+<p>下面我就带着大家100秒上手deno。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li><p>Using Shell:</p>
+<p>  <code>curl -fsSL https://deno.land/x/install/install.sh | sh</code></p>
+</li>
+<li><p>Using PowerShell:</p>
+<p>  <code>iwr https://deno.land/x/install/install.ps1 -useb | iex</code></p>
+</li>
+<li><p>Using Homebrew (macOS or Linux):</p>
+<p>  <code>brew install deno</code></p>
+</li>
+<li><p>Using Chocolatey (Windows):</p>
+<p>  <code>choco install deno</code></p>
+</li>
+</ul>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><p>在命令行运行  <code>deno --help</code></p>
+<p>我们会看到下图的信息。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/1720786c0b5723c1?w=704&h=938&f=png&s=40688"></p>
+<p>在上图我们可以看到deno的版本及一些其他的信息。</p>
+<p>我们还发现了上面有一个现有的例子。那我们就先跑一下这个例子。</p>
+<p><code>deno run https://deno.land/std/examples/welcome.ts</code></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/1720789a04f68ae1?w=907&h=59&f=png&s=6558"></p>
+<p>看到了<code>Welcome to Deno 🦕</code>,对吧~</p>
+<p>下面我们去看一下这个执行的文件里面是什么内容。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/172078b55c11415a?w=364&h=132&f=png&s=4731"></p>
+<p>对，你没看错。就是一个<code>console.log</code></p>
+<h3 id="新建demo"><a href="#新建demo" class="headerlink" title="新建demo"></a>新建demo</h3><p>下面我们就自己创建一个文件，试着本地跑一下。</p>
+<p>创建文件 <code>hello-mien.ts</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#39;hello mien, this is my first deno demo ~ 🦕&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>让我们运行一下这个文件。</p>
+<p><code>deno run ./hello-mien.ts</code></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/17207907bb304581?w=788&h=73&f=png&s=8009"></p>
+<p>到这里我们就完成了一个简单的hello world 的例子。</p>
+<h3 id="看点有意思的"><a href="#看点有意思的" class="headerlink" title="看点有意思的"></a>看点有意思的</h3><p>作为一名前端程序员，你告诉我，那个方法你用的最多？</p>
+<p>心里默念。</p>
+<p>3</p>
+<p>2</p>
+<p>1</p>
+<p><code>console.log</code>对不对？</p>
+<p>刚才既然我们用deno 运行了一条命令，那我们是不是要查看一下deno 这个全局变量都有啥~</p>
+<p>让我们加一行日志，看一下全局Deno里面都有啥。</p>
+<p><code>console.log(Deno);</code></p>
+<p>运行脚本 <code>deno run ./hello-mien.ts</code></p>
+<p>我们能够看到Deno的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> Buffer: [Function: Buffer],</span><br><span class="line"> readAll: [AsyncFunction: readAll],</span><br><span class="line"> readAllSync: [Function: readAllSync],</span><br><span class="line"> writeAll: [AsyncFunction: writeAll],</span><br><span class="line"> writeAllSync: [Function: writeAllSync],</span><br><span class="line"> build: &#123;</span><br><span class="line">  target: &quot;x86_64-pc-windows-msvc&quot;,</span><br><span class="line">  arch: &quot;x86_64&quot;,</span><br><span class="line">  os: &quot;windows&quot;,</span><br><span class="line">  vendor: &quot;pc&quot;,</span><br><span class="line">  env: &quot;msvc&quot;</span><br><span class="line"> &#125;,</span><br><span class="line"> chmodSync: [Function: chmodSync],</span><br><span class="line"> chmod: [AsyncFunction: chmod],</span><br><span class="line"> chownSync: [Function: chownSync],</span><br><span class="line"> chown: [AsyncFunction: chown],</span><br><span class="line"> customInspect: Symbol(Deno.symbols.customInspect),</span><br><span class="line"> inspect: [Function: inspect],</span><br><span class="line"> copyFileSync: [Function: copyFileSync],</span><br><span class="line"> copyFile: [AsyncFunction: copyFile],</span><br><span class="line"> DiagnosticCategory: &#123;</span><br><span class="line">  0: &quot;Log&quot;,</span><br><span class="line">  1: &quot;Debug&quot;,</span><br><span class="line">  2: &quot;Info&quot;,</span><br><span class="line">  3: &quot;Error&quot;,</span><br><span class="line">  4: &quot;Warning&quot;,</span><br><span class="line">  5: &quot;Suggestion&quot;,</span><br><span class="line">  Log: 0,</span><br><span class="line">  Debug: 1,</span><br><span class="line">  Info: 2,</span><br><span class="line">  Error: 3,</span><br><span class="line">  Warning: 4,</span><br><span class="line">  Suggestion: 5</span><br><span class="line"> &#125;,</span><br><span class="line"> chdir: [Function: chdir],</span><br><span class="line"> cwd: [Function: cwd],</span><br><span class="line"> errors: &#123;</span><br><span class="line">  NotFound: [Function: NotFound],</span><br><span class="line">  PermissionDenied: [Function: PermissionDenied],</span><br><span class="line">  ConnectionRefused: [Function: ConnectionRefused],</span><br><span class="line">  ConnectionReset: [Function: ConnectionReset],</span><br><span class="line">  ConnectionAborted: [Function: ConnectionAborted],</span><br><span class="line">  NotConnected: [Function: NotConnected],</span><br><span class="line">  AddrInUse: [Function: AddrInUse],</span><br><span class="line">  AddrNotAvailable: [Function: AddrNotAvailable],</span><br><span class="line">  BrokenPipe: [Function: BrokenPipe],</span><br><span class="line">  AlreadyExists: [Function: AlreadyExists],</span><br><span class="line">  InvalidData: [Function: InvalidData],</span><br><span class="line">  TimedOut: [Function: TimedOut],</span><br><span class="line">  Interrupted: [Function: Interrupted],</span><br><span class="line">  WriteZero: [Function: WriteZero],</span><br><span class="line">  UnexpectedEof: [Function: UnexpectedEof],</span><br><span class="line">  BadResource: [Function: BadResource],</span><br><span class="line">  Http: [Function: Http],</span><br><span class="line">  Busy: [Function: Busy]</span><br><span class="line"> &#125;,</span><br><span class="line"> File: [Function: File],</span><br><span class="line"> open: [AsyncFunction: open],</span><br><span class="line"> openSync: [Function: openSync],</span><br><span class="line"> create: [Function: create],</span><br><span class="line"> createSync: [Function: createSync],</span><br><span class="line"> stdin: Stdin &#123; rid: 0 &#125;,</span><br><span class="line"> stdout: Stdout &#123; rid: 1 &#125;,</span><br><span class="line"> stderr: Stderr &#123; rid: 2 &#125;,</span><br><span class="line"> seek: [Function: seek],</span><br><span class="line"> seekSync: [Function: seekSync],</span><br><span class="line"> read: [AsyncFunction: read],</span><br><span class="line"> readSync: [Function: readSync],</span><br><span class="line"> write: [AsyncFunction: write],</span><br><span class="line"> writeSync: [Function: writeSync],</span><br><span class="line"> watchFs: [Function: watchFs],</span><br><span class="line"> internal: Symbol(Deno.internal),</span><br><span class="line"> copy: [AsyncFunction: copy],</span><br><span class="line"> iter: [AsyncGeneratorFunction: iter],</span><br><span class="line"> iterSync: [GeneratorFunction: iterSync],</span><br><span class="line"> SeekMode: &#123; 0: &quot;Start&quot;, 1: &quot;Current&quot;, 2: &quot;End&quot;, Start: 0, Current: 1, End: 2 &#125;,</span><br><span class="line"> makeTempDirSync: [Function: makeTempDirSync],</span><br><span class="line"> makeTempDir: [Function: makeTempDir],</span><br><span class="line"> makeTempFileSync: [Function: makeTempFileSync],</span><br><span class="line"> makeTempFile: [Function: makeTempFile],</span><br><span class="line"> metrics: [Function: metrics],</span><br><span class="line"> mkdirSync: [Function: mkdirSync],</span><br><span class="line"> mkdir: [AsyncFunction: mkdir],</span><br><span class="line"> connect: [AsyncFunction: connect],</span><br><span class="line"> listen: [Function: listen],</span><br><span class="line"> dir: [Function: dir],</span><br><span class="line"> env: &#123; get: [Function: getEnv], toObject: [Function: toObject], set: [Function: setEnv] &#125;,</span><br><span class="line"> exit: [Function: exit],</span><br><span class="line"> execPath: [Function: execPath],</span><br><span class="line"> run: [Function: run],</span><br><span class="line"> Process: [Function: Process],</span><br><span class="line"> readDirSync: [Function: readDirSync],</span><br><span class="line"> readDir: [Function: readDir],</span><br><span class="line"> readFileSync: [Function: readFileSync],</span><br><span class="line"> readFile: [AsyncFunction: readFile],</span><br><span class="line"> readTextFileSync: [Function: readTextFileSync],</span><br><span class="line"> readTextFile: [AsyncFunction: readTextFile],</span><br><span class="line"> readLinkSync: [Function: readLinkSync],</span><br><span class="line"> readLink: [Function: readLink],</span><br><span class="line"> realPathSync: [Function: realPathSync],</span><br><span class="line"> realPath: [Function: realPath],</span><br><span class="line"> removeSync: [Function: removeSync],</span><br><span class="line"> remove: [AsyncFunction: remove],</span><br><span class="line"> renameSync: [Function: renameSync],</span><br><span class="line"> rename: [AsyncFunction: rename],</span><br><span class="line"> resources: [Function: resources],</span><br><span class="line"> close: [Function: close],</span><br><span class="line"> statSync: [Function: statSync],</span><br><span class="line"> lstatSync: [Function: lstatSync],</span><br><span class="line"> stat: [AsyncFunction: stat],</span><br><span class="line"> lstat: [AsyncFunction: lstat],</span><br><span class="line"> connectTls: [AsyncFunction: connectTls],</span><br><span class="line"> listenTls: [Function: listenTls],</span><br><span class="line"> truncateSync: [Function: truncateSync],</span><br><span class="line"> truncate: [AsyncFunction: truncate],</span><br><span class="line"> isatty: [Function: isatty],</span><br><span class="line"> version: &#123; deno: &quot;1.0.0-rc2&quot;, v8: &quot;8.4.300&quot;, typescript: &quot;3.8.3&quot; &#125;,</span><br><span class="line"> writeFileSync: [Function: writeFileSync],</span><br><span class="line"> writeFile: [AsyncFunction: writeFile],</span><br><span class="line"> writeTextFileSync: [Function: writeTextFileSync],</span><br><span class="line"> writeTextFile: [AsyncFunction: writeTextFile],</span><br><span class="line"> test: [Function: test],</span><br><span class="line"> core: &#123;</span><br><span class="line">  print: [Function],</span><br><span class="line">  recv: [Function],</span><br><span class="line">  send: [Function],</span><br><span class="line">  setMacrotaskCallback: [Function],</span><br><span class="line">  evalContext: [Function],</span><br><span class="line">  formatError: [Function],</span><br><span class="line">  encode: [Function],</span><br><span class="line">  decode: [Function],</span><br><span class="line">  getPromiseDetails: [Function],</span><br><span class="line">  shared: SharedArrayBuffer &#123;&#125;,</span><br><span class="line">  setAsyncHandler: [Function: setAsyncHandler],</span><br><span class="line">  dispatch: [Function: dispatch],</span><br><span class="line">  sharedQueue: &#123;</span><br><span class="line">   MAX_RECORDS: 100,</span><br><span class="line">   head: [Function: head],</span><br><span class="line">   numRecords: [Function: numRecords],</span><br><span class="line">   size: [Function: size],</span><br><span class="line">   push: [Function: push],</span><br><span class="line">   reset: [Function: reset],</span><br><span class="line">   shift: [Function: shift]</span><br><span class="line">  &#125;,</span><br><span class="line">  ops: [Function: ops]</span><br><span class="line"> &#125;,</span><br><span class="line"> args: [],</span><br><span class="line"> pid: 18188,</span><br><span class="line"> noColor: false,</span><br><span class="line"> Symbol(Deno.internal): &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以，我们熟悉那些方法，依然还是原来的样子哦~</p>
+<p>查看一下路径。</p>
+<p><code>Deno.cwd()</code></p>
+<p>运行脚本，这时候我们会得到一个报错！</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/172079b5a6246472?w=832&h=153&f=png&s=18002"></p>
+<p>Uncaught PermissionDenied: read access to “***” run again with the <code>--allow-read</code> flag</p>
+<p>这就是deno的安全策略，默认你是没有权限访问的。</p>
+<p>如果加上<code>--allow-read</code>,你就能得到想要的结果。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/172079df10b49dc4?w=833&h=72&f=png&s=8022"></p>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><p>首先我们去官方的标注库里面找点有意思的东西。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/17207a2b4f603006?w=1280&h=543&f=png&s=20215"></p>
+<p>修改代码</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; red, blue, white &#125; <span class="keyword">from</span> <span class="string">&#x27;https://deno.land/std/fmt/colors.ts&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(red(<span class="string">&#x27;i\&#x27;m red text&#x27;</span>));</span><br><span class="line"><span class="built_in">console</span>.log(blue(<span class="string">&#x27;i\&#x27;m blue text&#x27;</span>));</span><br><span class="line"><span class="built_in">console</span>.log(white(<span class="string">&#x27;i\&#x27;m white text&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/12/17207a52d670e0e9?w=857&h=112&f=png&s=9809"></p>
+<p>PS: 通过外部地址引入的库或者文件，在第一次引入之后都会缓存在本地。</p>
+<p>OK， 到这里就是本次的全部内容了。关于deno还有很多内容需要我们重新认识。本文也不过是一个非常简单的demo,感兴趣的同学不妨自己动手试一下吧。</p>
+<blockquote>
+<p>Mien, 5年前端开发经验，目前就职于斯伦贝谢。</p>
+</blockquote>
+<blockquote>
+<p>涉猎范围： Angular, Vue, React, 小程序, electron, nodeJS以及一些乱七八糟的技术</p>
+</blockquote>
+<blockquote>
+<p>欢迎留言提问和指正。</p>
+</blockquote>
+<p>我们下期再见~</p>
+
+                                                                        
+                                    </div>
+                                    <footer class="article-footer">
+                                        <a data-url="https://mienhuang.github.io/2020/08/02/100%E7%A7%92%E4%B8%8A%E6%89%8BDeno/" data-id="ckdcvin8k0000kovi4pdj42d9" class="article-share-link">
+                                            Share
+                                        </a>
+                                        
+                                    </footer>
+
+    </div>
+
+    
+        
+  <nav class="article-nav">
+    
+      <a href="/2020/08/02/Angular-%E4%BB%8E%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%88%B0%E6%89%93%E5%8C%85docker-image-%E5%8F%91%E5%B8%83/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer</strong>
+        <div class="article-nav-title">
+          
+            Angular 从创建项目到打包docker image 发布
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/08/02/300%E7%A7%92%E5%86%99%E5%87%BA%E9%AB%98%E5%8F%AF%E8%AF%BB%E4%BB%A3%E7%A0%81/" class="article-nav-link">
+        <strong class="article-nav-caption">Older</strong>
+        <div class="article-nav-title">300秒写出高可读代码</div>
+      </a>
+    
+  </nav>
+
+
+            
+
+                
+                    
+                        
+                            
+
+</article>
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+    <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2020 Mien&#39;s Grown Diary</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Mien&#39;s Grown Diary"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+
+</body>
+</html>
